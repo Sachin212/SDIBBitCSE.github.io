@@ -1,96 +1,33 @@
-import React, { useState, useContext } from 'react'
-import { Form, Button } from 'semantic-ui-react'
-import { useForm } from '../utils/hooks'
-import gql from 'graphql-tag'
-import { useMutation } from '@apollo/react-hooks'
+import React from 'react'
+import { Button, Card } from 'semantic-ui-react'
 
-import { AuthContext } from '../context/auth'
-
-function Home(props){
-    const context = useContext(AuthContext)
-
-    const [errors, setErrors] = useState({})
-
-    const {onChange, onSubmit, value} = useForm(loginUserCallback,{
-        username:'',
-        password:''
-    })
-
-    const [loginUser, {loading}] = useMutation(LOGIN_USER, {
-        update(_, {data: { login: userData }}){
-            context.login(userData)
-            props.history.push('/userdata')
-        },
-        onError(err){
-            console.log(err.graphQLErrors[0])
-            setErrors(err.graphQLErrors[0].extension.exception.errors)
-        },
-        variables: value
-    })
-
-    function loginUserCallback(){
-        loginUser()
-    }
-
+const Home = () =>{
     return(
-        <>
-        <div style={{marginTop: '2%'}}>
-        <Form onSubmit={onSubmit} noValidate className={loading ? "loading": ""}>
-            <Form.Group unstackable widths={2}>
-                <Form.Input
-                    label="Username"
-                    placeholder="Username"
-                    name="username"
-                    type="text"
-                    value={value.username}
-                    onChange={onChange}
-                    
-                />
-            </Form.Group>
-            <Form.Group unstackable widths={2}>
-                <Form.Input
-                    label="Password"
-                    placeholder="Password"
-                    name="password"
-                    type="password"
-                    value={value.password}
-                    onChange={onChange}
-                />
-            </Form.Group>
-            <div style={{marginTop: '20px'}}>
-            <Button type="submit" primary>
-                Login
-            </Button>
-            </div>
-        </Form>
+        <div style={{margin: '5%', marginLeft: '5%'}}>
+            <Card.Group>
+                <Card>
+                    <Card.Content>
+                        To see All the Data Click Below
+                    </Card.Content>
+                    <Card.Content extra>
+                        <Button color={'teal'}>
+                            Click Here!
+                        </Button>
+                    </Card.Content>
+                </Card>
+                <Card>
+                    <Card.Content>
+                        To create/delete Form
+                    </Card.Content>
+                    <Card.Content extra>
+                        <Button color={'teal'}>
+                            Click Here!
+                        </Button>
+                    </Card.Content>
+                </Card>
+            </Card.Group>
         </div>
-        {
-            Object.keys(errors).length > 0 && (
-                <div className="ui error message">
-                    <ul className="list">
-                        {Object.values(errors).map(value =>(
-                            <li key={value}>{value}</li>
-                        ))}
-                    </ul>
-                </div>
-            )
-        }
-        </>
     )
 }
-
-const LOGIN_USER = gql`
-    mutation login(
-        $username: String!
-        $password: String!
-    ){
-        login(
-            username: $username
-            password: $password
-        ){
-            id email username createdAt token
-        }
-    }
-`
 
 export default Home
