@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Button, Card } from 'semantic-ui-react'
 
 const Home = () =>{
@@ -10,7 +11,7 @@ const Home = () =>{
                         To see All the Data Click Below
                     </Card.Content>
                     <Card.Content extra>
-                        <Button color={'teal'}>
+                        <Button as={Link} to={'/data'} color={'teal'}>
                             Click Here!
                         </Button>
                     </Card.Content>
@@ -20,7 +21,7 @@ const Home = () =>{
                         To create/delete Form
                     </Card.Content>
                     <Card.Content extra>
-                        <Button color={'teal'}>
+                        <Button as={Link} to={'/form'} color={'teal'}>
                             Click Here!
                         </Button>
                     </Card.Content>
