@@ -19,7 +19,7 @@ function Home(props){
     const [loginUser, {loading}] = useMutation(LOGIN_USER, {
         update(_, {data: { login: userData }}){
             context.login(userData)
-            props.history.push('/home')
+            props.history.push('/')
         },
         onError(err){
             console.log(err.graphQLErrors[0])
